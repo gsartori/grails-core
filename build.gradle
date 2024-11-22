@@ -6,7 +6,7 @@ plugins {
 }
 
 version = projectVersion
-ext.set('grailsVersion', libs.versions.grails.asProvider().get())
+ext.set('grailsVersion', libs.versions.grails.get())
 ext.set('isSnapshot', projectVersion.endsWith('-SNAPSHOT'))
 ext.set('isReleaseVersion', !isSnapshot)
 
@@ -28,6 +28,8 @@ if(isReleaseVersion) {
 
 
 subprojects {
+    apply plugin: 'groovy'
+
     version = rootProject.version
     repositories {
         mavenLocal() // Used by Groovy Joint Workflow
@@ -39,6 +41,10 @@ subprojects {
                 url = 'https://groovy.jfrog.io/artifactory/libs-snapshot-local/'
             }
         }
+    }
+
+    dependencies {
+        implementation platform(libs.grails.bom)
     }
 
     tasks.withType(Test).configureEach {

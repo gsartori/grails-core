@@ -1,5 +1,4 @@
 plugins  {
-    id 'groovy'
     id 'java-library'
     id 'org.grails.grails-web'
     id 'org.grails.grails-plugin'
@@ -27,6 +26,8 @@ dependencies {
     compileOnly libs.servlet.api // Provided
 
     testImplementation libs.spock.core
+    testImplementation libs.spring.test
+    testImplementation libs.servlet.api
 
     testRuntimeOnly libs.slf4j.nop // Get rid of warning about missing slf4j implementation during test task
 
