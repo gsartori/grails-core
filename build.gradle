@@ -12,9 +12,9 @@ ext.set('isReleaseVersion', !isSnapshot)
 
 if(isReleaseVersion) {
     nexusPublishing {
-        String nexusUser = project.findProperty('sonatypeOssUsername')
-        String nexusPass = project.findProperty('sonatypeOssPassword')
-        String nexusStagingProfileId = project.findProperty('sonatypeOssStagingProfileId')
+        String nexusUser = System.getenv("SONATYPE_USERNAME")
+        String nexusPass = System.getenv("SONATYPE_PASSWORD")
+        String nexusStagingProfileId = System.getenv("SONATYPE_STAGING_PROFILE_ID")
         repositories {
             sonatype {
                 nexusUrl = uri('https://s01.oss.sonatype.org/service/local/')
