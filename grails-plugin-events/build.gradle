@@ -15,11 +15,14 @@ dependencies {
     // https://github.com/gradle/gradle/issues/21539
     api project(':grails-events-transform')
 
-    implementation libs.grails.bootstrap
-    implementation libs.grails.core
+    // As this is a plugin these dependencies will be provided by the Grails application
+    // This removes circular dependencies
+    compileOnly libs.grails.bootstrap
+    compileOnly libs.grails.core
 
     testImplementation libs.spock.core
 
+    testRuntimeOnly libs.grails.bootstrap
     testRuntimeOnly libs.slf4j.nop // Get rid of warning about missing slf4j implementation during test task
 
 }
