@@ -68,7 +68,6 @@ class PubSubSpec extends Specification {
 
 
     @Rollback
-    @Ignore
     void 'Test synchronous event listener'() {
 
         when: 'when a event listener cancels an insert'
