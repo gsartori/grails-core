@@ -1,7 +1,7 @@
 package org.grails.async.factory.rxjava
 
 import grails.async.PromiseMap
-import spock.lang.Ignore
+import spock.lang.PendingFeature
 import spock.lang.Specification
 import spock.util.concurrent.PollingConditions
 
@@ -86,7 +86,7 @@ class RxJavaPromiseMapSpec extends Specification{
             }
     }
 
-    @Ignore('''
+    @PendingFeature(reason = '''
         This test fails because the chained call to then does not use the
         map returned from the previous closure. So the same first map
         is returned over and over.
@@ -97,10 +97,8 @@ class RxJavaPromiseMapSpec extends Specification{
             def map = new PromiseMap()
             map['one'] = { 1 }
             def promise = map.then {
-                println it
                 it['four'] = 4; it
             }.then {
-                println it
                 it['eight'] = 8; it
             }
             def result = promise.get()
