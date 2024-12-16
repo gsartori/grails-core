@@ -1,20 +1,13 @@
 plugins {
-    id 'application'
     id 'groovy'
-    id 'org.grails.grails-web'
-    id 'org.grails.plugins.views-json'
 }
 
+version = rootProject.version
 group = 'pubsub.demo'
-configurations.all {
 
-    resolutionStrategy.dependencySubstitution {
-        substitute module("org.codehaus.groovy:groovy") using module('org.apache.groovy:groovy:4.0.22')
-        substitute module("org.codehaus.groovy:groovy-templates") using module('org.apache.groovy:groovy-templates:4.0.22')
-        substitute module("org.codehaus.groovy:groovy-xml") using module('org.apache.groovy:groovy-xml:4.0.22')
-        substitute module("org.codehaus.groovy:groovy-json") using module('org.apache.groovy:groovy-json:4.0.22')
-    }
-}
+// Must be applied after version is set
+apply plugin: 'org.grails.grails-web'
+
 dependencies {
 
     implementation project(':grails-plugin-async')
@@ -30,8 +23,7 @@ dependencies {
     implementation 'org.grails:grails-web-boot'
 
     implementation 'org.grails.plugins:hibernate5'
-    implementation libs.grails.views.json
-    implementation libs.grails.views.json.templates
+    implementation 'org.grails.plugins:views-json'
 
     implementation 'org.springframework.boot:spring-boot-autoconfigure'
     implementation 'org.springframework.boot:spring-boot-starter'
@@ -40,7 +32,8 @@ dependencies {
     implementation libs.micronaut.serde.jackson
 
     runtimeOnly 'com.h2database:h2'
-    runtimeOnly 'org.apache.tomcat:tomcat-jdbc'
+    runtimeOnly 'org.fusesource.jansi:jansi'
+    runtimeOnly 'com.zaxxer:HikariCP'
 
     testImplementation libs.micronaut.http.client
     testImplementation 'org.grails:grails-web-testing-support'

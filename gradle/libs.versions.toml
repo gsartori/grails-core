@@ -38,5 +38,3 @@ spring-tx = { module = 'org.springframework:spring-tx' }
 spring-web = { module = 'org.springframework:spring-web' }
 micronaut-serde-jackson = { module = 'io.micronaut.serde:micronaut-serde-jackson', version.ref = 'micronaut-serde-jackson' }
 micronaut-http-client = { module = 'io.micronaut:micronaut-http-client', version.ref = 'micronaut-http-client' }
-grails-views-json = { module = 'org.grails.plugins:views-json' }
-grails-views-json-templates = { module = 'org.grails.plugins:views-json-templates' }

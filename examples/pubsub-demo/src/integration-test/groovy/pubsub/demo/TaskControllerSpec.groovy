@@ -7,7 +7,7 @@ import io.micronaut.http.HttpStatus
 import io.micronaut.http.client.HttpClient
 import io.micronaut.http.client.exceptions.HttpClientResponseException
 import spock.lang.AutoCleanup
-import spock.lang.Ignore
+import spock.lang.PendingFeature
 import spock.lang.Shared
 import spock.lang.Specification
 
@@ -25,7 +25,11 @@ class TaskControllerSpec extends Specification {
         client = HttpClient.create("http://localhost:$serverPort".toURL())
     }
 
-    @Ignore
+    @PendingFeature(reason = '''
+        For some reason the response body is blank with bootTestRun.
+        However, when starting the application with bootRun,
+        the response body is as expected.
+    ''')
     void 'test async error handling'() {
 
         when: 'we invoke an endpoint that throws an exception'
