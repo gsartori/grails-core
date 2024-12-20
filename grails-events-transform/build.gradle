@@ -12,7 +12,7 @@ dependencies {
     api libs.grails.datastore.core
     api libs.spring.context
 
-    implementation libs.grails.datastore.gorm, {
+    compileOnly libs.grails.datastore.gorm, {
         // TODO: Explain why this exclusion is done
         exclude group: 'org.grails', module: 'grails-datastore-gorm-validation'
     }
@@ -22,6 +22,11 @@ dependencies {
     implementation libs.spring.core
     implementation libs.spring.tx
     implementation libs.jakarta.annotation.api
+
+    testImplementation libs.grails.datastore.gorm, {
+        // TODO: Explain why this exclusion is done
+        exclude group: 'org.grails', module: 'grails-datastore-gorm-validation'
+    }
 
     testImplementation libs.grails.datastore.gorm.test, {
         // TODO: Explain why this exclusion is done (I don't know)

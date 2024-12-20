@@ -21,7 +21,7 @@ jobs:
         run: echo "release_version=${GITHUB_REF:11}" >> $GITHUB_OUTPUT
 
       - name: Run pre-release
-        uses: micronaut-projects/github-actions/pre-release@master
+        uses: grails/github-actions/pre-release@main
 
       - name: Generate secring file
         env:
@@ -38,6 +38,7 @@ jobs:
           SONATYPE_STAGING_PROFILE_ID: ${{ secrets.SONATYPE_STAGING_PROFILE_ID }}
           SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
           SIGNING_PASSPHRASE: ${{ secrets.SIGNING_PASSPHRASE }}
+          GITHUB_MAVEN_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
         with:
           arguments: |
             -Psigning.secretKeyRingFile=${{ github.workspace }}/secring.gpg
@@ -54,7 +55,7 @@ jobs:
 
       - name: Publish Documentation to Github Pages
         if: success()
-        uses: micronaut-projects/github-pages-deploy-action@grails
+        uses: grails/github-pages-deploy-action@grails
         env:
           TARGET_REPOSITORY: ${{ github.repository }}
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
@@ -67,4 +68,4 @@ jobs:
 
       - name: Run post-release
         if: steps.publish_to_sonatype.outcome == 'success'
-        uses: micronaut-projects/github-actions/post-release@master
+        uses: grails/github-actions/post-release@main
