@@ -47,3 +47,5 @@ jobs:
       - name: "⚙️ Run post-release"
         if: success()
         uses: grails/github-actions/post-release@main
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
