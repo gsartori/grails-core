@@ -15,7 +15,7 @@ jobs:
       - name: "☕️ Setup JDK"
         uses: actions/setup-java@v4
         with:
-          distribution: temurin
+          distribution: liberica
           java-version: 17
       - name: "🐘 Setup Gradle"
         uses: gradle/actions/setup-gradle@v4
@@ -30,6 +30,7 @@ jobs:
           ORG_GRADLE_PROJECT_artifactoryUsername: ${{ secrets.ARTIFACTORY_USERNAME }}
           ORG_GRADLE_PROJECT_artifactoryPassword: ${{ secrets.ARTIFACTORY_PASSWORD }}
           DEVELOCITY_ACCESS_KEY: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
+          GITHUB_MAVEN_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
         run: >
           ./gradlew
           -Dorg.gradle.internal.publish.checksums.insecure=true

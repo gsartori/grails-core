@@ -26,6 +26,17 @@ apply plugin: 'signing'
 repositories {
     mavenCentral()
     maven { url = 'https://repo.grails.org/grails/core' }
+
+    if (System.getenv("GITHUB_MAVEN_PASSWORD") && !grailsVersion.endsWith('-SNAPSHOT')) {
+        System.out.println("Adding Grails Core Repo for ${project.name}")
+        maven {
+            url = 'https://maven.pkg.github.com/grails/grails-core'
+            credentials {
+                username = 'DOES_NOT_MATTER'
+                password = System.getenv("GITHUB_MAVEN_PASSWORD")
+            }
+        }
+    }
 }
 
 configurations {
@@ -41,31 +52,32 @@ configurations.configureEach {
     }
 }
 
+compileJava.options.release = 17
+
 java {
-    toolchain.languageVersion = JavaLanguageVersion.of(17)
     withSourcesJar()
     withJavadocJar()
 }
 
 dependencies {
-
+    implementation platform("org.grails:grails-bom:$grailsVersion")
     api 'org.grails:grails-web-common'
 
     implementation "org.apache.commons:commons-lang3:$commonsLang3Version"
     implementation "org.codehaus.groovy:groovy-xml:$groovyVersion"
     implementation 'org.grails:grails-bootstrap'
-    implementation "org.grails:grails-datastore-gorm:$datastoreVersion"
+    implementation "org.grails:grails-datastore-gorm"
 
-    compileOnly "jakarta.servlet:jakarta.servlet-api:$servletApiVersion" // Provided
+    compileOnly "jakarta.servlet:jakarta.servlet-api" // Provided
 
-    testImplementation "jakarta.servlet:jakarta.servlet-api:$servletApiVersion"
+    testImplementation "jakarta.servlet:jakarta.servlet-api"
     testImplementation 'org.grails:grails-core'
     testImplementation 'org.grails:grails-datastore-core'
     testImplementation 'org.grails:grails-web-common'
-    testImplementation "org.springframework:spring-context:$springVersion"
-    testImplementation "org.spockframework:spock-core:$spockVersion"
+    testImplementation 'org.springframework:spring-context'
+    testImplementation 'org.spockframework:spock-core'
 
-    documentation 'com.github.javaparser:javaparser-core:3.26.1'
+    documentation 'com.github.javaparser:javaparser-core'
 }
 
 tasks.named('groovydoc', Groovydoc) {
