@@ -17,7 +17,6 @@ dependencies {
     implementation buildsrcLibs.nexus.publish.gradle.plugin
 
     runtimeOnly buildsrcLibs.grails.gradle.plugin
-    runtimeOnly buildsrcLibs.grails.views.gradle.plugin
     runtimeOnly buildsrcLibs.groovydoc.gradle.plugin
 }
 
