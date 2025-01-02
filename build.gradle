@@ -10,11 +10,16 @@ ext.set('grailsVersion', libs.versions.grails.get())
 ext.set('isSnapshot', projectVersion.endsWith('-SNAPSHOT'))
 ext.set('isReleaseVersion', !isSnapshot)
 
-if(isReleaseVersion) {
+String customGroovyVersion = findProperty('groovyVersion') ?: System.getenv('GROOVY_VERSION')
+if (customGroovyVersion) {
+    logger.warn("Using custom Groovy version: $customGroovyVersion")
+}
+
+if (isReleaseVersion) {
     nexusPublishing {
-        String nexusUser = System.getenv("SONATYPE_USERNAME")
-        String nexusPass = System.getenv("SONATYPE_PASSWORD")
-        String nexusStagingProfileId = System.getenv("SONATYPE_STAGING_PROFILE_ID")
+        String nexusUser = System.getenv('SONATYPE_USERNAME')
+        String nexusPass = System.getenv('SONATYPE_PASSWORD')
+        String nexusStagingProfileId = System.getenv('SONATYPE_STAGING_PROFILE_ID')
         repositories {
             sonatype {
                 nexusUrl = uri('https://s01.oss.sonatype.org/service/local/')
@@ -31,23 +36,37 @@ subprojects {
     apply plugin: 'groovy'
 
     version = rootProject.version
-    repositories {
-        mavenLocal() // Used by Groovy Joint Workflow
-        mavenCentral()
-        maven { url = 'https://repo.grails.org/grails/core' }
-        if (libs.versions.groovy.get().endsWith('-SNAPSHOT')) {
-            maven {
-                name = 'JFrog Groovy snapshot repo'
-                url = 'https://groovy.jfrog.io/artifactory/libs-snapshot-local/'
+
+    if (customGroovyVersion) {
+        configurations.configureEach {
+            resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+                if (details.requested.group == 'org.apache.groovy') {
+                    details.useVersion(customGroovyVersion)
+                }
             }
         }
-        if (System.getenv("GITHUB_MAVEN_PASSWORD") && !grailsVersion.endsWith('-SNAPSHOT')) {
-            System.out.println("Adding Grails Core Repo")
+    }
+
+    repositories {
+        mavenCentral()
+        maven { url = 'https://repo.grails.org/grails/core' }
+        // mavenLocal() // Keep, this will be uncommented and used by CI (groovy-joint-workflow)
+        if (customGroovyVersion?.endsWith('-SNAPSHOT')) {
+            // Used for testing locally against the latest snapshot of Groovy
+            // Usage: ./gradlew build -P"groovyVersion=X.X.X-SNAPSHOT"
+            maven {
+                name = 'ASF Snapshot repo'
+                url = 'https://repository.apache.org/content/repositories/snapshots'
+            }
+        }
+        if (System.getenv('GITHUB_MAVEN_PASSWORD') && !grailsVersion.endsWith('-SNAPSHOT')) {
+            // Used during the release process to access modules temporarily published to GitHub Packages
+            logger.warn("Adding Grails Core Repo to $name")
             maven {
                 url = 'https://maven.pkg.github.com/grails/grails-core'
                 credentials {
                     username = 'DOES_NOT_MATTER'
-                    password = System.getenv("GITHUB_MAVEN_PASSWORD")
+                    password = System.getenv('GITHUB_MAVEN_PASSWORD')
                 }
             }
         }
