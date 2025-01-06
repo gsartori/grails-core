@@ -7,19 +7,20 @@ plugins {
 group = 'org.grails'
 
 dependencies {
+    implementation platform("org.grails:grails-bom:${grailsVersion}")
 
-    implementation libs.groovy.core
-    implementation libs.slf4j.api
-    implementation libs.jakarta.annotation.api
+    implementation 'org.apache.groovy:groovy'
+    implementation 'org.slf4j:slf4j-api'
+    implementation 'jakarta.annotation:jakarta.annotation-api'
 
-    compileOnly libs.jakarta.annotation.api
+    compileOnly 'jakarta.annotation:jakarta.annotation-api'
 
-    testImplementation libs.spock.core
+    testImplementation 'org.spockframework:spock-core'
 
-    testRuntimeOnly libs.bytebuddy
-    testRuntimeOnly libs.objenesis
+    testRuntimeOnly 'net.bytebuddy:byte-buddy'
+    testRuntimeOnly 'org.objenesis:objenesis'
 
-    testRuntimeOnly libs.slf4j.nop // Get rid of warning about missing slf4j implementation during test task
+    testRuntimeOnly 'org.slf4j:slf4j-nop' // Get rid of warning about missing slf4j implementation during test task
 
 }
 

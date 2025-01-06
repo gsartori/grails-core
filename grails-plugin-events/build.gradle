@@ -6,6 +6,7 @@ plugins  {
 }
 
 dependencies {
+    implementation platform("org.grails:grails-bom:${grailsVersion}")
 
     api project(':grails-events-core')
     api project(':grails-events-compat')
@@ -17,13 +18,13 @@ dependencies {
 
     // As this is a plugin these dependencies will be provided by the Grails application
     // This removes circular dependencies
-    compileOnly libs.grails.bootstrap
-    compileOnly libs.grails.core
+    compileOnly 'org.grails:grails-bootstrap'
+    compileOnly 'org.grails:grails-core'
 
-    testImplementation libs.spock.core
+    testImplementation 'org.spockframework:spock-core'
 
-    testRuntimeOnly libs.grails.bootstrap
-    testRuntimeOnly libs.slf4j.nop // Get rid of warning about missing slf4j implementation during test task
+    testRuntimeOnly 'org.grails:grails-bootstrap'
+    testRuntimeOnly 'org.slf4j:slf4j-nop' // Get rid of warning about missing slf4j implementation during test task
 
 }
 

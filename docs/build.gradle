@@ -7,6 +7,7 @@ plugins {
 configurations.register('groovydocRuntimeOnly')
 
 dependencies {
+    implementation platform("org.grails:grails-bom:${grailsVersion}")
     groovydocRuntimeOnly localGroovy()
 }
 
@@ -56,10 +57,10 @@ tasks.register('generateGuide', PublishGuide) {
             'sourcedir': rootProject.layout.projectDirectory.asFile,
             'javaee'   : 'https://docs.oracle.com/javaee/7/api/',
             'javase'   : 'https://docs.oracle.com/en/java/javase/11/docs/api/',
-            'groovyapi': "https://docs.groovy-lang.org/${libs.versions.groovy.get()}/html/gapi/",
-            'grailsapi': "https://docs.grails.org/${libs.versions.grails.get()}/api/",
-            'gormapi'  : "https://gorm.grails.org/${libs.versions.gorm.get()}/api/",
-            'springapi': "https://docs.spring.io/spring/docs/${libs.versions.spring.get()}/javadoc-api/"
+            'groovyapi': "https://docs.groovy-lang.org/${project['groovy.version']}/html/gapi/",
+            'grailsapi': "https://docs.grails.org/${grailsVersion}/api/",
+            'gormapi'  : "https://gorm.grails.org/${project['grails-datastore.version']}/api/",
+            'springapi': "https://docs.spring.io/spring/docs/${project['spring-framework.version']}/javadoc-api/"
     ]
     doLast {
         def dir = project.layout.buildDirectory.dir('docs').get().asFile

@@ -8,17 +8,18 @@ plugins {
 group = 'org.grails'
 
 dependencies {
+    implementation platform("org.grails:grails-bom:${grailsVersion}")
 
     api project(':grails-events-core')
-    api libs.gpars, {
+    api 'org.codehaus.gpars:gpars:1.2.1', {
         exclude group: 'org.multiverse', module: 'multiverse-core' // Multiverse Software Transactional Memory (STM) Engine not used
         exclude group: 'org.codehaus.groovy', module: 'groovy-all' // Gpars 1.2.1 pulls in Groovy 2.1.9
     }
 
-    implementation libs.groovy.core
-    implementation libs.slf4j.api
+    implementation 'org.apache.groovy:groovy'
+    implementation 'org.slf4j:slf4j-api'
 
-    testImplementation libs.spock.core
+    testImplementation 'org.spockframework:spock-core'
 
 }
 
