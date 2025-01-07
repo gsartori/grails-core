@@ -8,16 +8,17 @@ plugins {
 group = 'org.grails'
 
 dependencies {
+    implementation platform("org.grails:grails-bom:${grailsVersion}")
 
     api project(':grails-events-core')
-    api libs.spring.context
+    api 'org.springframework:spring-context'
 
-    implementation libs.groovy.core
-    implementation libs.slf4j.api
+    implementation 'org.apache.groovy:groovy'
+    implementation 'org.slf4j:slf4j-api'
 
-    testImplementation libs.spock.core
+    testImplementation 'org.spockframework:spock-core'
 
-    testRuntimeOnly libs.slf4j.nop // Get rid of warning about missing slf4j implementation during test task
+    testRuntimeOnly 'org.slf4j:slf4j-nop' // Get rid of warning about missing slf4j implementation during test task
 
 }
 

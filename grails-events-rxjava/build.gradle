@@ -7,20 +7,21 @@ plugins {
 group = 'org.grails'
 
 dependencies {
+    implementation platform("org.grails:grails-bom:${grailsVersion}")
 
     api project(':grails-events-core')
-    api libs.rxjava
+    api 'io.reactivex:rxjava:1.3.8'
 
-    implementation libs.groovy.core
-    implementation libs.slf4j.api
+    implementation 'org.apache.groovy:groovy'
+    implementation 'org.slf4j:slf4j-api'
 
     testImplementation project(':grails-events-transform')
-    testImplementation libs.grails.datastore.core
-    testImplementation libs.grails.datastore.gorm.test
-    testImplementation libs.spock.core
-    testImplementation libs.spring.context
+    testImplementation 'org.grails:grails-datastore-core'
+    testImplementation 'org.grails:grails-datastore-gorm-test'
+    testImplementation 'org.spockframework:spock-core'
+    testImplementation 'org.springframework:spring-context'
 
-    testRuntimeOnly libs.slf4j.nop // Get rid of warning about missing slf4j implementation during test task
+    testRuntimeOnly 'org.slf4j:slf4j-nop' // Get rid of warning about missing slf4j implementation during test task
 
 }
 

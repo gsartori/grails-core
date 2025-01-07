@@ -7,11 +7,12 @@ plugins {
 group = 'org.grails'
 
 dependencies {
+    implementation platform("org.grails:grails-bom:${grailsVersion}")
 
     api project(':grails-events-core')
 
-    implementation libs.groovy.core
-    implementation libs.slf4j.api
+    implementation 'org.apache.groovy:groovy'
+    implementation 'org.slf4j:slf4j-api'
 
 }
 
