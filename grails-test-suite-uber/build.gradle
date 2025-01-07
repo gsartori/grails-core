@@ -25,7 +25,7 @@ dependencies {
                 project(':grails-spring')
 
     testImplementation "org.grails:grails-datastore-gorm-hibernate5"
-    testImplementation "org.grails.plugins:async"
+    testImplementation project(':grails-async-plugin')
     testImplementation "org.grails.plugins:gsp"
     testImplementation "org.grails:grails-gorm-testing-support"
     testImplementation "org.grails:grails-web-testing-support"

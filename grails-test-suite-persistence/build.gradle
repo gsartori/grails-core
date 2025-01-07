@@ -28,7 +28,7 @@ dependencies {
     testRuntimeOnly "org.springframework:spring-aspects"
     testRuntimeOnly "org.aspectj:aspectjrt", "org.aspectj:aspectjweaver"
 
-    testImplementation "org.grails.plugins:async"
+    testImplementation project(':grails-async-plugin')
     testImplementation "org.grails:grails-gorm-testing-support"
 }
 

@@ -25,17 +25,13 @@ publishing {
                                 delegate.scope "api"
                             }
                         }
-                        delegate.dependency {
-                            delegate.groupId "org.grails.plugins"
-                            delegate.artifactId "async"
-                            delegate.version project['grails-async.version']
-                            delegate.scope "api"
-                        }
-                        delegate.dependency {
-                            delegate.groupId "org.grails.plugins"
-                            delegate.artifactId "events"
-                            delegate.version project['grails-async.version']
-                            delegate.scope "api"
+                        for(sub in ['async', 'events']) {
+                            delegate.dependency {
+                                delegate.groupId "org.grails.plugins"
+                                delegate.artifactId sub
+                                delegate.version project.version
+                                delegate.scope "api"
+                            }
                         }
                         delegate.dependency {
                             delegate.groupId "org.grails.plugins"
