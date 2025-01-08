@@ -48,8 +48,3 @@ Java and .NET applications. Take a look at YourKit's leading software products:
 [YourKit Java Profiler](https://www.yourkit.com/java/profiler/features/) and
 [YourKit .NET Profiler](https://www.yourkit.com/.net/profiler/features/).
 
-## Dependencies
-
-**Gradle Plugins**
-
-* Gradle Nexus Staging Plugin [Github](https://github.com/Codearte/gradle-nexus-staging-plugin)
