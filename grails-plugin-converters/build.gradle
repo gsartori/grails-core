@@ -17,32 +17,20 @@ apply plugin: 'java-library'
 apply plugin: 'org.grails.grails-plugin'
 
 dependencies {
-    implementation platform(project(":grails-bom"))
+    implementation platform(project(':grails-bom'))
+
     api project(':grails-web-common')
 
-    implementation "org.apache.commons:commons-lang3:$commonsLang3Version"
-    implementation "org.codehaus.groovy:groovy-xml:$groovyVersion"
+    compileOnly 'jakarta.servlet:jakarta.servlet-api' // Provided
+
+    implementation 'org.apache.commons:commons-lang3'
+    implementation 'org.grails:grails-datastore-gorm'
     implementation project(':grails-bootstrap')
-    implementation "org.grails:grails-datastore-gorm"
 
-    compileOnly "jakarta.servlet:jakarta.servlet-api" // Provided
-
-    testImplementation "jakarta.servlet:jakarta.servlet-api"
-    testImplementation project(':grails-core')
+    testImplementation 'jakarta.servlet:jakarta.servlet-api'
     testImplementation 'org.grails:grails-datastore-core'
-    testImplementation project(':grails-web-common')
-    testImplementation 'org.springframework:spring-context'
     testImplementation 'org.spockframework:spock-core'
-
-    documentation 'com.github.javaparser:javaparser-core'
-}
-
-tasks.named('bootJar', BootJar) {
-    enabled = false
-    mainClass = 'grails.plugin.converters.Application'
-}
-
-tasks.named('jar', Jar) {
-    enabled = true
-    archiveClassifier = ''
+    testImplementation 'org.springframework:spring-context'
+    testImplementation project(':grails-core')
+    testImplementation project(':grails-web-common')
 }
