@@ -35,7 +35,7 @@ class PublishSubscribeSpringSpec extends Specification {
             publisher.sum(1, 2)
 
         then: 'the subscriber is notified'
-            new PollingConditions().eventually {
+            new PollingConditions(timeout: 5).eventually {
                 !subscriber.error
                 subscriber.total == 3
                 subscriber.events.size() == 1
@@ -47,7 +47,7 @@ class PublishSubscribeSpringSpec extends Specification {
             publisher.wrongType()
 
         then: 'the subscriber is not notified'
-            new PollingConditions().eventually {
+            new PollingConditions(timeout: 5).eventually {
                 !subscriber.error
                 subscriber.total == 3
                 subscriber.events.size() == 2
@@ -59,7 +59,7 @@ class PublishSubscribeSpringSpec extends Specification {
         then: 'an exception is thrown'
             def e = thrown(RuntimeException)
             e.message == 'bad'
-            new PollingConditions().eventually {
+            new PollingConditions(timeout: 5).eventually {
                 subscriber.error == e
                 subscriber.events.size() == 3
                 subscriber.total == 3

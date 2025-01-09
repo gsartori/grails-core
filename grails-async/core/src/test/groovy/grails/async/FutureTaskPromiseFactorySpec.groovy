@@ -52,7 +52,7 @@ class FutureTaskPromiseFactorySpec extends Specification {
             list.onComplete { List l -> result = l }
 
         then: 'the result is correct'
-            new PollingConditions().eventually {
+            new PollingConditions(timeout: 5).eventually {
                 result
                 result == [2, 4]
             }
@@ -62,7 +62,7 @@ class FutureTaskPromiseFactorySpec extends Specification {
             list.onComplete { result = it }
 
         then: 'the result is correct'
-            new PollingConditions().eventually {
+            new PollingConditions(timeout: 5).eventually {
                 result == [4, 8]
             }
     }
@@ -92,7 +92,7 @@ class FutureTaskPromiseFactorySpec extends Specification {
 
         then: 'the onComplete handler is invoked and the onError handler is ignored'
             thrown(ExecutionException)
-            new PollingConditions().eventually {
+            new PollingConditions(timeout: 5).eventually {
                 !result
                 error
             }

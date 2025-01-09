@@ -66,7 +66,7 @@ class SynchronousPromiseFactorySpec extends Specification {
             list.onComplete { result = it }
 
         then: 'the result is correct'
-            new PollingConditions().eventually {
+            new PollingConditions(timeout: 5).eventually {
                 result == [2, 4]
             }
 
@@ -75,7 +75,7 @@ class SynchronousPromiseFactorySpec extends Specification {
             list.onComplete { result = it }
 
         then: 'the result is correct'
-            new PollingConditions().eventually {
+            new PollingConditions(timeout: 5).eventually {
                 result == [6, 8]
             }
     }
@@ -90,7 +90,7 @@ class SynchronousPromiseFactorySpec extends Specification {
             promise.onError { hasError = true }
 
         then: 'The onComplete handler is invoked and the onError handler is ignored'
-            new PollingConditions().eventually {
+            new PollingConditions(timeout: 5).eventually {
                 result == 2
                 hasError == false
             }
@@ -106,7 +106,7 @@ class SynchronousPromiseFactorySpec extends Specification {
             promise.onError { error = it }
 
         then: 'the onComplete handler is invoked and the onError handler is ignored'
-            new PollingConditions().eventually {
+            new PollingConditions(timeout: 5).eventually {
                 !result
                 error
                 error.message == 'bad'

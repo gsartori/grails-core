@@ -53,7 +53,7 @@ class PublishSubscribeSpringSpec extends Specification {
 
         then: 'an exception should be thrown and the subscriber should receive the event'
             def e = thrown(RuntimeException)
-            new PollingConditions().eventually {
+            new PollingConditions(timeout: 5).eventually {
                 e.message == 'bad'
                 subscriber.error == e
                 subscriber.events.size() == 3

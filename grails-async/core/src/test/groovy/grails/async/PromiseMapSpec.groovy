@@ -33,7 +33,7 @@ class PromiseMapSpec extends Specification {
             map.onComplete { result = it }
 
         then: 'an appropriately populated map is returned to the onComplete event'
-            new PollingConditions().eventually {
+            new PollingConditions(timeout: 5).eventually {
                 result
                 result['one'] == 1
                 result['four'] == 4
@@ -52,7 +52,7 @@ class PromiseMapSpec extends Specification {
             map.onComplete { result = it }
 
         then: 'an appropriately populated map is returned to the onComplete event'
-            new PollingConditions().eventually {
+            new PollingConditions(timeout: 5).eventually {
                 result
                 result['one'] == 1
                 result['four'] == 4

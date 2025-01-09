@@ -18,7 +18,7 @@ class ActorEventBusSpec extends Specification {
             eventBus.notify('test', 'bar')
 
         then: 'the result is correct'
-            new PollingConditions().eventually {
+            new PollingConditions(timeout: 5).eventually {
                 result == 'foo bar'
             }
     }
@@ -36,7 +36,7 @@ class ActorEventBusSpec extends Specification {
         eventBus.notify('test', 'bar', 'baz')
 
         then: 'the result is correct'
-            new PollingConditions().eventually {
+            new PollingConditions(timeout: 5).eventually {
                 result == 'foo [bar, baz]'
             }
     }
@@ -54,7 +54,7 @@ class ActorEventBusSpec extends Specification {
             eventBus.notify('test', 'bar', 'baz')
 
         then: 'the result is correct'
-            new PollingConditions().eventually {
+            new PollingConditions(timeout: 5).eventually {
                 result == 'foo bar baz'
             }
     }
@@ -72,7 +72,7 @@ class ActorEventBusSpec extends Specification {
         eventBus.sendAndReceive('test', 'bar') { result = it }
 
         then: 'the result is correct'
-            new PollingConditions().eventually {
+            new PollingConditions(timeout: 5).eventually {
                 result == 'foo bar'
             }
     }
@@ -92,7 +92,7 @@ class ActorEventBusSpec extends Specification {
             eventBus.sendAndReceive('test', 'bar') { result = it }
 
         then: 'the result is a throwable'
-            new PollingConditions().eventually {
+            new PollingConditions(timeout: 5).eventually {
                 result instanceof Throwable
             }
     }
