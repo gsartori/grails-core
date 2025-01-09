@@ -1,0 +1,36 @@
+import org.springframework.boot.gradle.tasks.bundling.BootJar
+
+buildscript {
+    repositories {
+        maven { url = 'https://repo.grails.org/grails/core' }
+    }
+    dependencies {
+        classpath "org.grails:grails-gradle-plugin:${project['grails-gradle-plugin.version']}"
+    }
+}
+
+group = 'org.grails.plugins'
+version = projectVersion
+
+apply plugin: 'groovy'
+apply plugin: 'java-library'
+apply plugin: 'org.grails.grails-plugin'
+
+dependencies {
+    implementation platform(project(':grails-bom'))
+
+    api project(':grails-web-common')
+
+    compileOnly 'jakarta.servlet:jakarta.servlet-api' // Provided
+
+    implementation 'org.apache.commons:commons-lang3'
+    implementation 'org.grails:grails-datastore-gorm'
+    implementation project(':grails-bootstrap')
+
+    testImplementation 'jakarta.servlet:jakarta.servlet-api'
+    testImplementation 'org.grails:grails-datastore-core'
+    testImplementation 'org.spockframework:spock-core'
+    testImplementation 'org.springframework:spring-context'
+    testImplementation project(':grails-core')
+    testImplementation project(':grails-web-common')
+}

@@ -261,10 +261,11 @@ subprojects { subproject ->
                 maven(MavenPublication) {
                     // Historically async mapped the core libraries to different artifact ids
                     Map mappedArtifactIds = [
-                            'grails-async-core'   : 'grails-async',
-                            'grails-async-plugin' : 'async',
-                            'grails-events-core'  : 'grails-events',
-                            'grails-events-plugin': 'events'
+                            'grails-async-core'       : 'grails-async',
+                            'grails-async-plugin'     : 'async',
+                            'grails-events-core'      : 'grails-events',
+                            'grails-events-plugin'    : 'events',
+                            'grails-plugin-converters': 'converters'
 
                     ]
                     if(mappedArtifactIds.containsKey(subproject.name)) {
