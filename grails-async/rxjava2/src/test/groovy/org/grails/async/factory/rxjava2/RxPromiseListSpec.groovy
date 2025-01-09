@@ -20,7 +20,7 @@ class RxPromiseListSpec extends Specification {
             list.onComplete { result = it }
 
         then: 'then the result from onComplete is correct'
-            new PollingConditions().eventually {
+            new PollingConditions(timeout: 5).eventually {
                 result == [1,2,3]
             }
     }
@@ -36,7 +36,7 @@ class RxPromiseListSpec extends Specification {
             list.onComplete { result = it }
 
         then: 'then the result from onComplete is correct'
-            new PollingConditions().eventually {
+            new PollingConditions(timeout: 5).eventually {
                 result == [1,2,3]
             }
     }

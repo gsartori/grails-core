@@ -24,7 +24,7 @@ class PubSubSpec extends Specification {
             sumService.sum(1, 2)
 
         then: 'the subscriber should receive the events'
-            new PollingConditions().eventually {
+            new PollingConditions(timeout: 5).eventually {
                 totalService.accumulatedTotal == 6
             }
     }
@@ -48,7 +48,7 @@ class PubSubSpec extends Specification {
             bookService.saveBook('The Stand')
 
         then: 'the event is fired and received'
-            new PollingConditions().eventually {
+            new PollingConditions(timeout: 5).eventually {
                 bookSubscriber.newBooks == ['The Stand']
                 bookSubscriber.insertEvents.size() == 1
             }

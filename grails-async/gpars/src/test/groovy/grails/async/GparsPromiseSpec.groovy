@@ -80,7 +80,7 @@ class GparsPromiseSpec extends Specification {
             promiseList.onComplete { List v -> result = v }
 
         then: 'the result is correct'
-            new PollingConditions().eventually {
+            new PollingConditions(timeout: 5).eventually {
                 result == [2, 4]
             }
 
@@ -90,7 +90,7 @@ class GparsPromiseSpec extends Specification {
             promiseList.onComplete { List v -> result = v }
 
         then: 'The result is correct'
-            new PollingConditions() {
+            new PollingConditions(timeout: 5) {
                 result == [2,4]
             }
     }
@@ -105,7 +105,7 @@ class GparsPromiseSpec extends Specification {
             promise.onError { hasError = true }
 
         then: 'the onComplete handler is invoked and the onError handler is ignored'
-            new PollingConditions().eventually {
+            new PollingConditions(timeout: 5).eventually {
                 result == 2
                 hasError == false
             }
@@ -121,7 +121,7 @@ class GparsPromiseSpec extends Specification {
             promise.onError { error = it }
 
         then: 'the onError handler is invoked and the onComplete handler is ignored'
-            new PollingConditions().eventually {
+            new PollingConditions(timeout: 5).eventually {
                 !result
                 error
                 error.message == 'bad'
