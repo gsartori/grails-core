@@ -7,7 +7,10 @@ buildscript {
         classpath "io.github.gradle-nexus:publish-plugin:$gradleNexusPublishPluginVersion"
         classpath "com.netflix.nebula:gradle-extra-configurations-plugin:$gradleExtraConfigurationsPluginVersion"
         classpath "com.bmuschko:gradle-nexus-plugin:$gradleNexusPluginVersion"
-        classpath "gradle.plugin.com.hierynomus.gradle.plugins:license-gradle-plugin:$gradleLicensePluginVersion"
+        // Due to https://github.com/hierynomus/license-gradle-plugin/issues/161, spring must be excluded
+        classpath "gradle.plugin.com.hierynomus.gradle.plugins:license-gradle-plugin:$gradleLicensePluginVersion", {
+            exclude group: 'org.springframework', module: 'spring-core'
+        }
     }
 }
 
@@ -166,10 +169,19 @@ apply from: "gradle/idea.gradle"
 subprojects { subproject ->
 
     version = grailsVersion
-    group = "org.grails"
 
-    ext.isTestSuite = subproject.name.startsWith("grails-test-suite")
-    ext.isCiBuild = subproject.hasProperty("isCiBuild") || System.getenv().get("CI") as Boolean
+    ext.isTestSuite = subproject.name.startsWith('grails-test-suite')
+    ext.isExample = subproject.name.contains('grails-test-examples')
+    ext.isPlugin = subproject.name in ['grails-async-plugin', 'grails-events-plugin']
+    ext.isCiBuild = subproject.hasProperty('isCiBuild') || System.getenv().get('CI') as Boolean
+    ext.isAsyncProject = subproject.name.startsWith('grails-async') || subproject.name.startsWith('grails-events')
+
+    if (isPlugin) {
+        group = 'org.grails.plugins'
+    } else {
+        group = 'org.grails'
+    }
+
     ext.pomInfo = {
         delegate.name 'Grails® framework'
         delegate.description 'Grails Web Application Framework'
@@ -196,7 +208,6 @@ subprojects { subproject ->
                 delegate.email 'grails-build@users.noreply.github.com'
             }
         }
-
     }
 
     if (subproject.name != 'grails-bom') {
@@ -207,7 +218,7 @@ subprojects { subproject ->
         apply plugin: 'project-report'
     }
 
-    if (!isTestSuite) {
+    if (!isTestSuite && !isExample) {
 
         apply plugin: 'maven-publish'
         apply plugin: 'signing'
@@ -248,35 +259,35 @@ subprojects { subproject ->
 
             publications {
                 maven(MavenPublication) {
-                    pom {
-                        name = 'Grails® framework'
-                        description = 'Grails Web Application Framework'
-                        url = 'https://grails.org/'
+                    // Historically async mapped the core libraries to different artifact ids
+                    Map mappedArtifactIds = [
+                            'grails-async-core'   : 'grails-async',
+                            'grails-async-plugin' : 'async',
+                            'grails-events-core'  : 'grails-events',
+                            'grails-events-plugin': 'events'
 
-                        licenses {
-                            license {
-                                name = 'The Apache Software License, Version 2.0'
-                                url = 'https://www.apache.org/licenses/LICENSE-2.0.txt'
-                                distribution = 'repo'
-                            }
-                        }
-
-                        scm {
-                            url = 'scm:git@github.com:grails/grails-core.git'
-                            connection = 'scm:git@github.com:grails/grails-core.git'
-                            developerConnection = 'scm:git@github.com:grails/grails-core.git'
-                        }
-
-                        developers {
-                            developer {
-                                id = 'graemerocher'
-                                name = 'Graeme Rocher'
-                                email = 'grails-build@users.noreply.github.com'
-                            }
-                        }
+                    ]
+                    if(mappedArtifactIds.containsKey(subproject.name)) {
+                        artifactId = mappedArtifactIds[subproject.name]
                     }
+
+                    pom.withXml {
+                        def pomNode = asNode()
+                        pomNode.children().last() + pomInfo
+
+                        // dependency management shouldn't be included
+                        try { pomNode.dependencyManagement.replaceNode({}) } catch (Throwable ignore) {}
+                    }
+
                     if (subproject.name != 'grails-bom') {
                         from components.java
+                    }
+
+                    if(isAsyncProject) {
+                        versionMapping {
+                            usage('java-api') { fromResolutionOf('runtimeClasspath') }
+                            usage('java-runtime') { fromResolutionResult() }
+                        }
                     }
                 }
             }
@@ -301,10 +312,10 @@ subprojects { subproject ->
         }
     }
 
-    if (subproject.name in ['grails-dependencies', 'grails-bom']) return
+    if (subproject.name in ['grails-dependencies', 'grails-bom'] || isExample) return
 
     dependencies {
-        api platform(project(':grails-bom'))
+        implementation platform(project(':grails-bom'))
     }
 
     if (subproject.name =~ /^(grails-web|grails-plugin-|grails-test-suite|grails-test)/) {

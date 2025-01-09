@@ -1,0 +1,73 @@
+buildscript {
+    repositories {
+        maven { url = 'https://repo.grails.org/grails/core' }
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.grails:grails-gradle-plugin:${project['grails-gradle-plugin.version']}"
+    }
+}
+
+plugins {
+    id 'groovy'
+    id 'war'
+    id 'idea'
+    id 'eclipse'
+}
+
+version = rootProject.version
+group = 'pubsub.demo'
+
+apply plugin: 'org.grails.grails-web'
+apply plugin: "org.grails.grails-gsp"
+
+dependencies {
+    implementation platform(project(':grails-bom'))
+
+    implementation project(':grails-async-plugin')
+    implementation project(':grails-events-plugin')
+
+    implementation project(':grails-core')
+    implementation project(':grails-logging')
+    implementation project(':grails-plugin-databinding')
+    implementation project(':grails-plugin-interceptors')
+    implementation project(':grails-plugin-rest')
+    implementation project(':grails-plugin-services')
+    implementation project(':grails-plugin-url-mappings')
+    implementation project(':grails-web-boot')
+
+    implementation "org.grails.plugins:gsp"
+    implementation 'org.grails.plugins:views-json'
+    implementation 'org.grails.plugins:hibernate5', {
+        exclude group: 'org.grails', module: 'grails-bom'
+    }
+
+    implementation 'org.springframework.boot:spring-boot-autoconfigure'
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.springframework.boot:spring-boot-starter-logging'
+    implementation 'org.springframework.boot:spring-boot-starter-tomcat'
+
+    runtimeOnly 'com.h2database:h2'
+    runtimeOnly 'org.fusesource.jansi:jansi'
+    runtimeOnly 'com.zaxxer:HikariCP'
+
+    testImplementation 'io.micronaut.serde:micronaut-serde-jackson:2.10.2'
+    testImplementation 'io.micronaut:micronaut-http-client:4.6.5'
+    testImplementation project(':grails-test')
+    testImplementation 'org.grails:grails-web-testing-support', {
+        exclude group: 'org.grails', module: 'grails-test'
+    }
+}
+
+bootRun {
+    mainClass = 'pubsub.demo.Application'
+}
+
+tasks.withType(Test).configureEach {
+    useJUnitPlatform()
+}
+
+// Don't need groovydoc for example project
+tasks.named('groovydoc') {
+    enabled = false
+}

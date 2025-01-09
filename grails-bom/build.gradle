@@ -41,11 +41,8 @@ ext {
         org.fusesource.jansi:jansi::
         org.gebish:geb-spock::
         com.github.spotbugs:spotbugs-annotations::
-        org.grails.plugins:async,events:::grails-async
         org.grails.plugins:converters::
         org.grails.plugins:gsp::
-        org.grails:grails-async:,gpars,rxjava,rxjava2::grails-async
-        org.grails:grails-events:gpars,rxjava,rxjava2,transform,spring,compat::grails-async
         org.grails:grails-datastore-gorm-hibernate5::
         org.grails:grails-datastore-gorm-mongodb::
         org.grails:grails-datastore:async,core,gorm,gorm-async,gorm-support,gorm-rx,gorm-test,gorm-validation,web,gorm-tck:
@@ -142,6 +139,7 @@ publishing {
 
                 project.parent.subprojects.findResults {
                     if (it.name == 'grails-bom') return null
+                    if (it.name.startsWith('grails-test-suite') || it.name.contains('grails-test-examples')) return null
                     [groupId: it.group, artifactId: it.name, version: "${it.version}"] +
                         (it.name == 'grails-dependencies'? [type:'pom'] : [])
                 }.each {
