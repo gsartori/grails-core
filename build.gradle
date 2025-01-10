@@ -176,6 +176,15 @@ subprojects { subproject ->
     ext.isCiBuild = subproject.hasProperty('isCiBuild') || System.getenv().get('CI') as Boolean
     ext.isAsyncProject = subproject.name.startsWith('grails-async') || subproject.name.startsWith('grails-events')
 
+    // Historically async mapped the core libraries to different artifact ids
+    ext.mappedArtifactIds = [
+            'grails-async-core'       : 'grails-async',
+            'grails-async-plugin'     : 'async',
+            'grails-events-core'      : 'grails-events',
+            'grails-events-plugin'    : 'events',
+            'grails-plugin-converters': 'converters'
+    ]
+
     if (isPlugin) {
         group = 'org.grails.plugins'
     } else {
@@ -261,15 +270,6 @@ subprojects { subproject ->
 
             publications {
                 maven(MavenPublication) {
-                    // Historically async mapped the core libraries to different artifact ids
-                    Map mappedArtifactIds = [
-                            'grails-async-core'       : 'grails-async',
-                            'grails-async-plugin'     : 'async',
-                            'grails-events-core'      : 'grails-events',
-                            'grails-events-plugin'    : 'events',
-                            'grails-plugin-converters': 'converters'
-
-                    ]
                     if(mappedArtifactIds.containsKey(subproject.name)) {
                         artifactId = mappedArtifactIds[subproject.name]
                     }
