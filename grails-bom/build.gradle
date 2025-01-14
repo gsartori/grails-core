@@ -41,6 +41,8 @@ ext {
         org.fusesource.jansi:jansi::
         org.gebish:geb-spock::
         com.github.spotbugs:spotbugs-annotations::
+        org.graalvm.sdk:graal-sdk::
+        org.graalvm.js:js:,scriptengine::graal-sdk
         org.grails.plugins:converters::
         org.grails.plugins:gsp::
         org.grails:grails-datastore-gorm-hibernate5::
