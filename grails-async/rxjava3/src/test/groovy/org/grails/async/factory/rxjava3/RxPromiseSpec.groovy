@@ -41,6 +41,18 @@ class RxPromiseSpec extends Specification {
 
     }
 
+    void 'Test promise null handling'() {
+
+        when: 'a null promise result is created'
+        def promise = Promises.createPromise {
+            return null
+        }
+        def result = promise.get()
+
+        then: 'result is void'
+        result == Void
+    }
+
     void 'Test promise map handling'() {
 
         when: 'a promise map is created'
