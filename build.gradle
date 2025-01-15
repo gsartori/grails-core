@@ -191,6 +191,23 @@ subprojects { subproject ->
         group = 'org.grails'
     }
 
+    if(isExample) {
+        // Test projects will often include dependencies from grails-core, this file will ensure any dependencies included
+        // will be substituted with projects in this repository instead of pulling upstream
+        configurations.all {
+            resolutionStrategy {
+                dependencySubstitution {
+                    for (def possibleProject  : rootProject.subprojects) {
+                        if(!possibleProject.name.startsWith('grails-test-suite') && !possibleProject.name.contains('grails-test-examples') && possibleProject.name != 'grails-bom') {
+                            def artifactId = mappedArtifactIds[possibleProject.name] ?: possibleProject.name
+                            substitute module("${subproject.name in ['grails-async-plugin', 'grails-events-plugin'] ? 'org.grails.plugins' : 'org.grails'}:${artifactId}") using project(":${possibleProject.name}")
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     ext.pomInfo = {
         delegate.name 'Grails® framework'
         delegate.description 'Grails Web Application Framework'
