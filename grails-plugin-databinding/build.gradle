@@ -12,7 +12,9 @@
         exclude module:'grails-core'
         exclude module:'async'
         exclude module:'gsp'
+        exclude module:'grails-testing-support'
     }
+    testImplementation project(':grails-testing-support')
 }
 
 tasks.named('compileTestGroovy').configure {

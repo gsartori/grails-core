@@ -191,9 +191,26 @@ subprojects { subproject ->
         group = 'org.grails'
     }
 
+    if(isExample) {
+        // Test projects will often include dependencies from grails-core, this file will ensure any dependencies included
+        // will be substituted with projects in this repository instead of pulling upstream
+        configurations.all {
+            resolutionStrategy {
+                dependencySubstitution {
+                    for (def possibleProject  : rootProject.subprojects) {
+                        if(!possibleProject.name.startsWith('grails-test-suite') && !possibleProject.name.contains('grails-test-examples') && possibleProject.name != 'grails-bom') {
+                            def artifactId = mappedArtifactIds[possibleProject.name] ?: possibleProject.name
+                            substitute module("${subproject.name in ['grails-async-plugin', 'grails-events-plugin'] ? 'org.grails.plugins' : 'org.grails'}:${artifactId}") using project(":${possibleProject.name}")
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     ext.pomInfo = {
         delegate.name 'Grails® framework'
-        delegate.description 'Grails Web Application Framework'
+        delegate.description subproject.name == 'grails-testing-support' ? 'Support for writing concise expressive tests for Grails artifacts' : 'Grails Web Application Framework'
         delegate.url 'https://grails.org/'
 
         delegate.licenses {
@@ -210,11 +227,25 @@ subprojects { subproject ->
             delegate.developerConnection 'scm:git@github.com:grails/grails-core.git'
         }
 
-        delegate.developers {
-            delegate.developer {
-                delegate.id 'graemerocher'
-                delegate.name 'Graeme Rocher'
-                delegate.email 'grails-build@users.noreply.github.com'
+        if(subproject.name == 'grails-testing-support') {
+            delegate.developers {
+                delegate.developer {
+                    delegate.id 'jeffscottbrown'
+                    delegate.name 'Jeff Brown'
+                }
+                delegate.developer {
+                    delegate.id 'jameskleeh'
+                    delegate.name 'James Kleeh'
+                }
+            }
+        }
+        else {
+            delegate.developers {
+                delegate.developer {
+                    delegate.id 'graemerocher'
+                    delegate.name 'Graeme Rocher'
+                    delegate.email 'grails-build@users.noreply.github.com'
+                }
             }
         }
     }
@@ -373,8 +404,6 @@ subprojects { subproject ->
         testImplementation "org.junit.jupiter:junit-jupiter-api"
         testImplementation "org.junit.platform:junit-platform-runner"
         testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine"
-
-        compileOnly "com.github.spotbugs:spotbugs-annotations"
 
         if (subproject.name != "grails-docs") {
             // Logging

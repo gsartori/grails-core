@@ -54,6 +54,18 @@ class RxPromiseSpec extends Specification {
             result == [one: 1, two: 2, four: 4]
     }
 
+    void 'Test promise null handling'() {
+
+        when: 'a null promise result is created'
+        def promise = Promises.createPromise {
+            return null
+        }
+        def result = promise.get()
+
+        then: 'result is void'
+        result == Void
+    }
+
     void 'Test promise list handling'() {
 
         when: 'a promise list is created from two promises'

@@ -31,27 +31,25 @@ ext {
         com.h2database:h2::
         commons-codec:commons-codec::
         io.methvin:directory-watcher::
+        io.reactivex:rxjava:::rxjava
+        io.reactivex.rxjava2:rxjava:::rxjava2
+        io.reactivex.rxjava3:rxjava:::rxjava3
         jline:jline::
         net.bytebuddy:byte-buddy::
         net.java.dev.jna:jna::
         org.apache.ant:ant:,junit:
         org.apache.commons:commons-text::
-        org.apache.groovy:groovy:bom:$groovyVersion
+        org.apache.groovy:groovy:bom:::
         org.asciidoctor:asciidoctorj::
         org.fusesource.jansi:jansi::
         org.gebish:geb-spock::
-        com.github.spotbugs:spotbugs-annotations::
-        org.graalvm.sdk:graal-sdk::
-        org.graalvm.js:js:,scriptengine::graal-sdk
-        org.grails.plugins:converters::
         org.grails.plugins:gsp::
         org.grails:grails-datastore-gorm-hibernate5::
         org.grails:grails-datastore-gorm-mongodb::
-        org.grails:grails-datastore:async,core,gorm,gorm-async,gorm-support,gorm-rx,gorm-test,gorm-validation,web,gorm-tck:
+        org.grails:grails-datastore-async,grails-datastore-core,grails-datastore-gorm,grails-datastore-gorm-async,grails-datastore-gorm-support,grails-datastore-gorm-rx,grails-datastore-gorm-test,grails-datastore-gorm-validation,grails-datastore-web,grails-datastore-gorm-tck,grails-gorm-testing-support:::grails-datastore
         org.grails:grails-gdoc-engine::
         org.grails:grails-gradle-plugin::
-        org.grails:grails-testing-support,grails-gorm-testing-support,grails-web-testing-support::
-        org.grails:grails:gsp,web-gsp,web-taglib::gsp
+        org.grails:grails:gsp,web-gsp,web-taglib,web-testing-support::gsp
         org.grails:views-json-testing-support::
         org.jsoup:jsoup::
         org.mongodb:bson:,record-codec::mongodb
