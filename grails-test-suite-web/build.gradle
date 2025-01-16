@@ -25,9 +25,12 @@ dependencies {
                 project(':grails-web-databinding'),
                 project(':grails-spring')
 
-    testImplementation "org.grails.plugins:converters"
+    testImplementation project(":grails-plugin-converters")
     testImplementation "org.grails:grails-datastore-gorm-hibernate5"
-    testImplementation "org.grails:grails-web-testing-support"
+    testImplementation "org.grails:grails-web-testing-support", {
+        exclude module:'grails-testing-support'
+    }
+    testImplementation project(':grails-testing-support')
     testImplementation "org.grails.plugins:gsp"
     testImplementation project(':grails-async-plugin')
     testImplementation "org.grails:grails-gorm-testing-support"

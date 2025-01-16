@@ -29,7 +29,10 @@ dependencies {
     testRuntimeOnly "org.aspectj:aspectjrt", "org.aspectj:aspectjweaver"
 
     testImplementation project(':grails-async-plugin')
-    testImplementation "org.grails:grails-gorm-testing-support"
+    testImplementation "org.grails:grails-gorm-testing-support", {
+        exclude module:'grails-testing-support'
+    }
+    testImplementation project(':grails-testing-support')
 }
 
 test {

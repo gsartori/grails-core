@@ -210,7 +210,7 @@ subprojects { subproject ->
 
     ext.pomInfo = {
         delegate.name 'Grails® framework'
-        delegate.description 'Grails Web Application Framework'
+        delegate.description subproject.name == 'grails-testing-support' ? 'Support for writing concise expressive tests for Grails artifacts' : 'Grails Web Application Framework'
         delegate.url 'https://grails.org/'
 
         delegate.licenses {
@@ -227,11 +227,25 @@ subprojects { subproject ->
             delegate.developerConnection 'scm:git@github.com:grails/grails-core.git'
         }
 
-        delegate.developers {
-            delegate.developer {
-                delegate.id 'graemerocher'
-                delegate.name 'Graeme Rocher'
-                delegate.email 'grails-build@users.noreply.github.com'
+        if(subproject.name == 'grails-testing-support') {
+            delegate.developers {
+                delegate.developer {
+                    delegate.id 'jeffscottbrown'
+                    delegate.name 'Jeff Brown'
+                }
+                delegate.developer {
+                    delegate.id 'jameskleeh'
+                    delegate.name 'James Kleeh'
+                }
+            }
+        }
+        else {
+            delegate.developers {
+                delegate.developer {
+                    delegate.id 'graemerocher'
+                    delegate.name 'Graeme Rocher'
+                    delegate.email 'grails-build@users.noreply.github.com'
+                }
             }
         }
     }
@@ -390,8 +404,6 @@ subprojects { subproject ->
         testImplementation "org.junit.jupiter:junit-jupiter-api"
         testImplementation "org.junit.platform:junit-platform-runner"
         testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine"
-
-        compileOnly "com.github.spotbugs:spotbugs-annotations"
 
         if (subproject.name != "grails-docs") {
             // Logging

@@ -51,6 +51,9 @@ include (
         'grails-web-mvc',
         'grails-web-url-mappings',
 
+        // test support
+        'grails-testing-support',
+
         // POM / BOMs
         'grails-dependencies',
         'grails-bom',

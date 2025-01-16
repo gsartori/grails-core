@@ -2,7 +2,7 @@ dependencies {
     implementation platform(project(':grails-bom'))
 
     api project(':grails-events-core')
-    api "io.reactivex.rxjava3:rxjava:$rxJava3Version"
+    api "io.reactivex.rxjava3:rxjava"
 
     implementation 'org.apache.groovy:groovy'
     implementation 'org.slf4j:slf4j-api'
