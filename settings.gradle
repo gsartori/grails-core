@@ -33,6 +33,7 @@ include 'issue-698-domain-save-npe'
 include 'hyphenated'
 include 'issue-views-182'
 include 'issue-11102'
+include 'demo33'
 //include 'micronaut' micronaut has been removed from Grails can be restored based on https://micronaut-projects.github.io/micronaut-spring/latest/guide/#springBootStarter
 
 include 'loadfirst'
