@@ -405,7 +405,7 @@ subprojects { subproject ->
         testImplementation "org.junit.platform:junit-platform-runner"
         testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine"
 
-        compileOnly "com.github.spotbugs:spotbugs-annotations"
+        //compileOnly "com.github.spotbugs:spotbugs-annotations"
 
         if (subproject.name != "grails-docs") {
             // Logging
