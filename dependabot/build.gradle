@@ -1,4 +1,4 @@
-// Generated on Tue Jan 14 16:31:57 EST 2025 by: ./gradlew :grails-bom:dependabotBuild
+// Generated on Fri Jan 17 12:13:55 EST 2025 by: ./gradlew :grails-bom:dependabotBuild
 plugins {
     id 'java-library'
 }
@@ -32,14 +32,14 @@ dependencies {
     api "org.grails:grails-datastore-gorm-test:${project['grails-datastore.version']}"
     api "org.grails:grails-datastore-gorm-validation:${project['grails-datastore.version']}"
     api "org.grails:grails-datastore-web:${project['grails-datastore.version']}"
+    api "org.grails:grails-gorm-testing-support:${project['grails-datastore.version']}"
     api "org.grails:grails-gdoc-engine:${project['grails-gdoc-engine.version']}"
     api "org.grails:grails-gradle-plugin:${project['grails-gradle-plugin.version']}"
-    api "org.grails:grails-gorm-testing-support:${project['grails-testing-support.version']}"
-    api "org.grails:grails-web-testing-support:${project['grails-testing-support.version']}"
     api "org.apache.groovy:groovy-bom:${project['groovy.version']}"
     api "org.grails:grails-gsp:${project['gsp.version']}"
     api "org.grails:grails-web-gsp:${project['gsp.version']}"
     api "org.grails:grails-web-taglib:${project['gsp.version']}"
+    api "org.grails:grails-web-testing-support:${project['gsp.version']}"
     api "org.grails.plugins:gsp:${project['gsp.version']}"
     api "com.h2database:h2:${project['h2.version']}"
     api "com.fasterxml.jackson:jackson-bom:${project['jackson.version']}"
@@ -61,8 +61,6 @@ dependencies {
     api "org.grails.plugins:hibernate5:${project['plugins-hibernate5.version']}"
     api "org.grails.plugins:mongodb:${project['plugins-mongodb.version']}"
     api "org.grails.plugins:neo4j:${project['plugins-neo4j.version']}"
-    api "org.grails.plugins:rxjava2:${project['plugins-rxjava2.version']}"
-    api "org.grails.plugins:rxjava:${project['plugins-rxjava.version']}"
     api "org.grails.plugins:scaffolding:${project['plugins-scaffolding.version']}"
     api "org.grails.plugins:views-gradle:${project['plugins-views-gradle.version']}"
     api "org.grails.plugins:views-json-templates:${project['plugins-views-json-templates.version']}"
@@ -78,6 +76,9 @@ dependencies {
     api "org.grails.profiles:vue:${project['profiles-vue.version']}"
     api "org.grails.profiles:web-plugin:${project['profiles-web-plugin.version']}"
     api "org.grails.profiles:web:${project['profiles-web.version']}"
+    api "io.reactivex.rxjava2:rxjava:${project['rxjava2.version']}"
+    api "io.reactivex.rxjava3:rxjava:${project['rxjava3.version']}"
+    api "io.reactivex:rxjava:${project['rxjava.version']}"
     api "org.spockframework:spock-core:${project['spock.version']}"
     api "org.spockframework:spock-spring:${project['spock.version']}"
     api "org.springframework.boot:spring-boot-cli:${project['spring-boot.version']}"
