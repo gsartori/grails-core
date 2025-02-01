@@ -43,8 +43,6 @@ ext {
         org.asciidoctor:asciidoctorj::
         org.fusesource.jansi:jansi::
         org.gebish:geb-spock::
-        org.graalvm.sdk:graal-sdk::
-        org.graalvm.js:js:,scriptengine::graal-sdk
         org.grails.plugins:gsp::
         org.grails:grails-datastore-gorm-hibernate5::
         org.grails:grails-datastore-gorm-mongodb::
