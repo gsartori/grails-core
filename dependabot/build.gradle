@@ -1,4 +1,4 @@
-// Generated on Fri Jan 17 12:13:55 EST 2025 by: ./gradlew :grails-bom:dependabotBuild
+// Generated on Fri Jan 31 16:17:36 PST 2025 by: ./gradlew :grails-bom:dependabotBuild
 plugins {
     id 'java-library'
 }
@@ -17,9 +17,6 @@ dependencies {
     api "io.methvin:directory-watcher:${project['directory-watcher.version']}"
     api "org.xhtmlrenderer:flying-saucer-pdf-openpdf:${project['flying-saucer-pdf-openpdf.version']}"
     api "org.gebish:geb-spock:${project['geb-spock.version']}"
-    api "org.graalvm.sdk:graal-sdk:${project['graal-sdk.version']}"
-    api "org.graalvm.js:js:${project['graal-sdk.version']}"
-    api "org.graalvm.js:js-scriptengine:${project['graal-sdk.version']}"
     api "org.grails:grails-datastore-gorm-hibernate5:${project['grails-datastore-gorm-hibernate5.version']}"
     api "org.grails:grails-datastore-gorm-mongodb:${project['grails-datastore-gorm-mongodb.version']}"
     api "org.grails:grails-datastore-async:${project['grails-datastore.version']}"
