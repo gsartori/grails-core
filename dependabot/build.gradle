@@ -1,4 +1,4 @@
-// Generated on Fri Jan 17 12:13:55 EST 2025 by: ./gradlew :grails-bom:dependabotBuild
+// Generated on Mon Feb 03 21:04:18 EST 2025 by: ./gradlew :grails-bom:dependabotBuild
 plugins {
     id 'java-library'
 }
@@ -17,9 +17,6 @@ dependencies {
     api "io.methvin:directory-watcher:${project['directory-watcher.version']}"
     api "org.xhtmlrenderer:flying-saucer-pdf-openpdf:${project['flying-saucer-pdf-openpdf.version']}"
     api "org.gebish:geb-spock:${project['geb-spock.version']}"
-    api "org.graalvm.sdk:graal-sdk:${project['graal-sdk.version']}"
-    api "org.graalvm.js:js:${project['graal-sdk.version']}"
-    api "org.graalvm.js:js-scriptengine:${project['graal-sdk.version']}"
     api "org.grails:grails-datastore-gorm-hibernate5:${project['grails-datastore-gorm-hibernate5.version']}"
     api "org.grails:grails-datastore-gorm-mongodb:${project['grails-datastore-gorm-mongodb.version']}"
     api "org.grails:grails-datastore-async:${project['grails-datastore.version']}"
@@ -66,16 +63,16 @@ dependencies {
     api "org.grails.plugins:views-json-templates:${project['plugins-views-json-templates.version']}"
     api "org.grails.plugins:views-json:${project['plugins-views-json.version']}"
     api "org.grails.plugins:views-markup:${project['plugins-views-markup.version']}"
-    api "org.grails.profiles:angular:${project['profiles-angular.version']}"
-    api "org.grails.profiles:base:${project['profiles-base.version']}"
-    api "org.grails.profiles:plugin:${project['profiles-plugin.version']}"
-    api "org.grails.profiles:profile:${project['profiles-profile.version']}"
-    api "org.grails.profiles:react:${project['profiles-react.version']}"
-    api "org.grails.profiles:rest-api-plugin:${project['profiles-rest-api-plugin.version']}"
-    api "org.grails.profiles:rest-api:${project['profiles-rest-api.version']}"
-    api "org.grails.profiles:vue:${project['profiles-vue.version']}"
-    api "org.grails.profiles:web-plugin:${project['profiles-web-plugin.version']}"
-    api "org.grails.profiles:web:${project['profiles-web.version']}"
+    api "org.grails.profiles:angular:${project['profiles.version']}"
+    api "org.grails.profiles:base:${project['profiles.version']}"
+    api "org.grails.profiles:plugin:${project['profiles.version']}"
+    api "org.grails.profiles:profile:${project['profiles.version']}"
+    api "org.grails.profiles:react:${project['profiles.version']}"
+    api "org.grails.profiles:rest-api:${project['profiles.version']}"
+    api "org.grails.profiles:rest-api-plugin:${project['profiles.version']}"
+    api "org.grails.profiles:vue:${project['profiles.version']}"
+    api "org.grails.profiles:web:${project['profiles.version']}"
+    api "org.grails.profiles:web-plugin:${project['profiles.version']}"
     api "io.reactivex.rxjava2:rxjava:${project['rxjava2.version']}"
     api "io.reactivex.rxjava3:rxjava:${project['rxjava3.version']}"
     api "io.reactivex:rxjava:${project['rxjava.version']}"
