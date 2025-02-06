@@ -140,7 +140,7 @@ class GrailsCreateStartScripts extends CreateStartScripts {
                 installedFile = "dist/$artifact.file.name"
             }
             installedFile
-        } + "lib/org.gradle/gradle-tooling-api/jars/gradle-tooling-api-${project.findProperty('gradleToolingApiVersion')}.jar".toString() // This is compileOnly, so it needs to be added manually
+        }
         generator.scriptRelPath = "bin/${unixScript.name}"
         generator.generateUnixScript(unixScript)
         generator.generateWindowsScript(windowsScript)
