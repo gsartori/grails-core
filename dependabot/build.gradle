@@ -1,4 +1,4 @@
-// Generated on Mon Feb 03 21:04:18 EST 2025 by: ./gradlew :grails-bom:dependabotBuild
+// Generated on Wed Feb 05 18:23:24 EST 2025 by: ./gradlew :grails-bom:dependabotBuild
 plugins {
     id 'java-library'
 }
@@ -46,6 +46,9 @@ dependencies {
     api "net.java.dev.jna:jna:${project['jna.version']}"
     api "org.webjars.npm:jquery:${project['jquery.version']}"
     api "org.jsoup:jsoup:${project['jsoup.version']}"
+    api "org.liquibase:liquibase-cdi:${project['liquibase.version']}"
+    api "org.liquibase:liquibase-core:${project['liquibase.version']}"
+    api "org.liquibase.ext:liquibase-hibernate5:${project['liquibase.version']}"
     api "org.mongodb:bson:${project['mongodb.version']}"
     api "org.mongodb:bson-record-codec:${project['mongodb.version']}"
     api "org.mongodb:mongodb-driver-core:${project['mongodb.version']}"

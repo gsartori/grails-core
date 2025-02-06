@@ -50,6 +50,8 @@ ext {
         org.grails:views-json-testing-support::
         org.grails.profiles:base,plugin,profile,web,rest-api,web-plugin,rest-api-plugin,react,vue,angular:::profiles
         org.jsoup:jsoup::
+        org.liquibase:liquibase-cdi,liquibase-core:::liquibase
+        org.liquibase.ext:liquibase-hibernate5:::liquibase
         org.mongodb:bson:,record-codec::mongodb
         org.mongodb:mongodb-driver:core,sync::mongodb
         org.objenesis:objenesis::
