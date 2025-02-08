@@ -22,6 +22,8 @@ class UrlMappings {
         "/old-controller-action-with-params"(redirect: [controller: 'baz', action: 'newUrl', keepParamsWhenRedirect: true])
         "/new-url"(controller: 'baz', 'action': 'newUrl')
 
+        "/forward/$param1"(controller: 'forwarding', action: 'two')
+
         "/"(view:"/index")
         "500"(view:'/error')
         "404"(controller:"errors", action:"notFound")
