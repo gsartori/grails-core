@@ -3,7 +3,7 @@ buildscript {
         maven { url "https://repo.grails.org/grails/core" }
     }
     dependencies {
-        classpath "org.grails:grails-gradle-plugin:$grailsGradlePluginVersion"
+        classpath "org.grails:grails-gradle-plugin:${project['grails-gradle-plugin.version']}"
     }
 }
 
@@ -13,15 +13,12 @@ group "datasources"
 apply plugin: "org.grails.grails-web"
 apply plugin: "org.grails.grails-gsp"
 
-
-dependencyManagement {
-    imports {
-        mavenBom "org.grails:grails-bom:$grailsVersion"
-    }
-    applyMavenExclusions false
-}
+apply plugin: 'java'
+compileJava.options.release = 17
 
 dependencies {
+    implementation platform(project(':grails-bom'))
+
     implementation "org.springframework.boot:spring-boot-starter-logging"
     implementation "org.springframework.boot:spring-boot-starter-actuator"
     implementation "org.springframework.boot:spring-boot-autoconfigure"
@@ -41,7 +38,8 @@ dependencies {
     testImplementation "org.grails:grails-gorm-testing-support"
 
     console "org.grails:grails-console"
+
+    integrationTestImplementation testFixtures("org.grails.plugins:geb")
 }
 
-apply from: "${rootProject.projectDir}/gradle/geb.gradle"
-
+apply from: rootProject.file('gradle/functional-test-project.gradle')

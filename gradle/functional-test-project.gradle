@@ -1,0 +1,19 @@
+tasks.withType(Test).configureEach {
+    onlyIf {
+        !project.hasProperty('skipFunctionalTests')
+    }
+    useJUnitPlatform()
+    testLogging {
+        events "passed", "skipped", "failed"
+
+        showExceptions true
+        exceptionFormat "full"
+        showCauses true
+        showStackTraces true
+    }
+}
+
+// Don't need groovydoc for example project
+tasks.named('groovydoc') {
+    enabled = false
+}

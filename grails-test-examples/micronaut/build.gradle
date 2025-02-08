@@ -3,9 +3,9 @@ buildscript {
         maven { url "https://repo.grails.org/grails/core" }
     }
     dependencies {
-        classpath "org.grails:grails-gradle-plugin:$grailsGradlePluginVersion"
+        classpath "org.grails:grails-gradle-plugin:${project['grails-gradle-plugin.version']}"
         classpath "org.grails.plugins:hibernate5"
-        classpath "com.bertramlabs.plugins:asset-pipeline-gradle:$assetPipelineVersion"
+        classpath "com.bertramlabs.plugins:asset-pipeline-gradle:${project['asset-pipeline-gradle.version']}"
     }
 }
 
@@ -19,9 +19,8 @@ apply plugin:"org.grails.grails-web"
 apply plugin:"org.grails.grails-gsp"
 apply plugin:"com.bertramlabs.asset-pipeline"
 
-repositories {
-    maven { url "https://repo.grails.org/grails/core" }
-}
+apply plugin: 'java'
+compileJava.options.release = 17
 
 configurations {
     developmentOnly
@@ -61,6 +60,8 @@ dependencies {
     testImplementation "org.grails:grails-gorm-testing-support"
     testImplementation "org.mockito:mockito-core"
     testImplementation "org.grails:grails-web-testing-support"
+
+    integrationTestImplementation testFixtures("org.grails.plugins:geb")
 }
 
 bootRun {
@@ -79,4 +80,4 @@ assets {
     minifyCss = true
 }
 
-apply from: "${rootProject.projectDir}/gradle/geb.gradle"
+apply from: rootProject.file('gradle/functional-test-project.gradle')
