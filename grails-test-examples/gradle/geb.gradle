@@ -1,0 +1,3 @@
+dependencies {
+    integrationTestImplementation testFixtures("org.grails.plugins:geb")
+}
