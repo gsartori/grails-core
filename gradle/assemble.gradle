@@ -92,8 +92,7 @@ tasks.register('sourcesJars', Sync) {
     from rootProject.subprojects.findAll { subproject ->
         !subproject.name.startsWith('grails-test-suite') &&
         !subproject.name.startsWith('grails-dependencies') &&
-        !subproject.name.startsWith('grails-bom') &&
-        !subproject.name.contains('grails-test-examples')
+        !subproject.name.startsWith('grails-bom')
     }.sourcesJar*.outputs*.files
     // sourcesFor comes from GrailsBuildPlugin
     from {
@@ -150,7 +149,7 @@ class GrailsCreateStartScripts extends CreateStartScripts {
 tasks.register('install') { task ->
     dependsOn 'populateDependencies', 'grailsCreateStartScripts'
     subprojects { Project project ->
-        if(!project.name.startsWith('grails-test-suite') && !project.name.startsWith('grails-test-examples')) {
+        if(!project.name.startsWith('grails-test-suite')) {
             task.dependsOn("$project.name:publishToMavenLocal")
         }
     }

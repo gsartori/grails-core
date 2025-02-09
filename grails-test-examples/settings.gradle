@@ -1,0 +1,177 @@
+plugins {
+    id 'com.gradle.develocity' version '3.18.2'
+    id 'com.gradle.common-custom-user-data-gradle-plugin' version '2.0.2'
+}
+
+def isCI = System.getenv('CI') != null
+def isLocal = !isCI
+def isAuthenticated = System.getenv('DEVELOCITY_ACCESS_KEY') != null
+def isBuildCacheAuthenticated =
+        System.getenv('DEVELOCITY_BUILD_CACHE_NODE_USER') != null &&
+                System.getenv('DEVELOCITY_BUILD_CACHE_NODE_KEY') != null
+
+develocity {
+    server = 'https://ge.grails.org'
+    buildScan {
+        publishing.onlyIf { isAuthenticated }
+        uploadInBackground = isLocal
+    }
+}
+
+buildCache {
+    local { enabled = isLocal }
+    remote(develocity.buildCache) {
+        push = isCI && isBuildCacheAuthenticated
+        enabled = true
+        usernameAndPassword(
+                System.getenv('DEVELOCITY_BUILD_CACHE_NODE_USER') ?: '',
+                System.getenv('DEVELOCITY_BUILD_CACHE_NODE_KEY') ?: ''
+        )
+    }
+}
+
+rootProject.name = 'grails.functional.tests.ROOT'
+
+// Functional Tests
+include (
+        'async-events-pubsub-demo',
+        'app1',
+        'app2',
+        'app3',
+        'datasources',
+        'namespaces',
+        'gorm',
+        'issue-698-domain-save-npe',
+        'hyphenated',
+        'issue-views-182',
+        'issue-11102',
+        'demo33',
+        // 'micronaut', // micronaut has been removed from Grails can be restored based on https://micronaut-projects.github.io/micronaut-spring/latest/guide/#springBootStarter
+        'plugins-loadfirst',
+        'plugins-loadsecond',
+        'plugins-loadafter',
+        'plugins-issue11005',
+        // 'issue-11767', // micronaut has been removed from Grails can be restored based on https://micronaut-projects.github.io/micronaut-spring/latest/guide/#springBootStarter
+        // 'plugins-issue-11767-plugin', // micronaut has been removed from Grails can be restored based on https://micronaut-projects.github.io/micronaut-spring/latest/guide/#springBootStarter
+)
+project(':async-events-pubsub-demo').projectDir = file('async-events-pubsub-demo')
+project(':app1').projectDir = file('app1')
+project(':app2').projectDir = file('app2')
+project(':app3').projectDir = file('app3')
+project(':datasources').projectDir = file('datasources')
+project(':namespaces').projectDir = file('namespaces')
+project(':gorm').projectDir = file('gorm')
+project(':issue-698-domain-save-npe').projectDir = file('issue-698-domain-save-npe')
+project(':hyphenated').projectDir = file('hyphenated')
+project(':issue-views-182').projectDir = file('issue-views-182')
+project(':issue-11102').projectDir = file('issue-11102')
+project(':demo33').projectDir = file('demo33')
+// project(':micronaut').projectDir = file('micronaut')
+project(':plugins-loadfirst').projectDir = file('plugins/loadfirst')
+project(':plugins-loadsecond').projectDir = file('plugins/loadsecond')
+project(':plugins-loadafter').projectDir = file('plugins/loadafter')
+project(':plugins-issue11005').projectDir = file('plugins/issue11005')
+// project(':issue-11767').projectDir = file('issue-11767')
+// project(':plugins-issue-11767-plugin').projectDir = file('plugins/issue-11767-plugin')
+
+// Include the core projects & substitute them
+include (
+        'grails-async-core',
+        'grails-async-gpars',
+        'grails-async-plugin',
+        'grails-async-rxjava',
+        'grails-async-rxjava2',
+        'grails-async-rxjava3',
+        'grails-bom',
+        'grails-bootstrap',
+        'grails-codecs',
+        'grails-console',
+        'grails-core',
+        'grails-databinding',
+        'grails-dependencies',
+        'grails-docs',
+        'grails-encoder',
+        'grails-events-compat',
+        'grails-events-core',
+        'grails-events-gpars',
+        'grails-events-plugin',
+        'grails-events-rxjava',
+        'grails-events-rxjava2',
+        'grails-events-rxjava3',
+        'grails-events-spring',
+        'grails-events-transform',
+        'grails-gradle-model',
+        'grails-logging',
+        'grails-plugin-codecs',
+        'grails-plugin-controllers',
+        'grails-plugin-converters',
+        'grails-plugin-databinding',
+        'grails-plugin-datasource',
+        'grails-plugin-domain-class',
+        'grails-plugin-i18n',
+        'grails-plugin-interceptors',
+        'grails-plugin-mimetypes',
+        'grails-plugin-rest',
+        'grails-plugin-services',
+        'grails-plugin-url-mappings',
+        'grails-plugin-validation',
+        'grails-shell',
+        'grails-spring',
+        'grails-test',
+        'grails-testing-support',
+        'grails-web',
+        'grails-web-boot',
+        'grails-web-common',
+        'grails-web-databinding',
+        'grails-web-mvc',
+        'grails-web-url-mappings'
+)
+project(':grails-async-core').projectDir=file('../grails-async-core')
+project(':grails-async-gpars').projectDir=file('../grails-async-gpars')
+project(':grails-async-plugin').projectDir=file('../grails-async-plugin')
+project(':grails-async-rxjava').projectDir=file('../grails-async-rxjava')
+project(':grails-async-rxjava2').projectDir=file('../grails-async-rxjava2')
+project(':grails-async-rxjava3').projectDir=file('../grails-async-rxjava3')
+project(':grails-bom').projectDir=file('../grails-bom')
+project(':grails-bootstrap').projectDir=file('../grails-bootstrap')
+project(':grails-codecs').projectDir=file('../grails-codecs')
+project(':grails-console').projectDir=file('../grails-console')
+project(':grails-core').projectDir=file('../grails-core')
+project(':grails-databinding').projectDir=file('../grails-databinding')
+project(':grails-dependencies').projectDir=file('../grails-dependencies')
+project(':grails-docs').projectDir=file('../grails-docs')
+project(':grails-encoder').projectDir=file('../grails-encoder')
+project(':grails-events-compat').projectDir=file('../grails-events-compat')
+project(':grails-events-core').projectDir=file('../grails-events-core')
+project(':grails-events-gpars').projectDir=file('../grails-events-gpars')
+project(':grails-events-plugin').projectDir=file('../grails-events-plugin')
+project(':grails-events-rxjava').projectDir=file('../grails-events-rxjava')
+project(':grails-events-rxjava2').projectDir=file('../grails-events-rxjava2')
+project(':grails-events-rxjava3').projectDir=file('../grails-events-rxjava3')
+project(':grails-events-spring').projectDir=file('../grails-events-spring')
+project(':grails-events-transform').projectDir=file('../grails-events-transform')
+project(':grails-gradle-model').projectDir=file('../grails-gradle-model')
+project(':grails-logging').projectDir=file('../grails-logging')
+project(':grails-plugin-codecs').projectDir=file('../grails-plugin-codecs')
+project(':grails-plugin-controllers').projectDir=file('../grails-plugin-controllers')
+project(':grails-plugin-converters').projectDir=file('../grails-plugin-converters')
+project(':grails-plugin-databinding').projectDir=file('../grails-plugin-databinding')
+project(':grails-plugin-datasource').projectDir=file('../grails-plugin-datasource')
+project(':grails-plugin-domain-class').projectDir=file('../grails-plugin-domain-class')
+project(':grails-plugin-i18n').projectDir=file('../grails-plugin-i18n')
+project(':grails-plugin-interceptors').projectDir=file('../grails-plugin-interceptors')
+project(':grails-plugin-mimetypes').projectDir=file('../grails-plugin-mimetypes')
+project(':grails-plugin-rest').projectDir=file('../grails-plugin-rest')
+project(':grails-plugin-services').projectDir=file('../grails-plugin-services')
+project(':grails-plugin-url-mappings').projectDir=file('../grails-plugin-url-mappings')
+project(':grails-plugin-validation').projectDir=file('../grails-plugin-validation')
+project(':grails-shell').projectDir=file('../grails-shell')
+project(':grails-spring').projectDir=file('../grails-spring')
+project(':grails-test').projectDir=file('../grails-test')
+project(':grails-testing-support').projectDir=file('../grails-testing-support')
+project(':grails-web').projectDir=file('../grails-web')
+project(':grails-web-boot').projectDir=file('../grails-web-boot')
+project(':grails-web-common').projectDir=file('../grails-web-common')
+project(':grails-web-databinding').projectDir=file('../grails-web-databinding')
+project(':grails-web-mvc').projectDir=file('../grails-web-mvc')
+project(':grails-web-url-mappings').projectDir=file('../grails-web-url-mappings')

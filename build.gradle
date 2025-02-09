@@ -166,12 +166,34 @@ allprojects {
 
 apply from: "gradle/idea.gradle"
 
+tasks.register('getExportedProjects') {
+    def mappedArtifactIds = [
+            'grails-async-core'       : 'grails-async',
+            'grails-async-plugin'     : 'async',
+            'grails-events-core'      : 'grails-events',
+            'grails-events-plugin'    : 'events',
+            'grails-plugin-converters': 'converters'
+    ]
+
+    for (Project subproject : rootProject.subprojects) {
+//        for (def possibleProject  : rootProject.subprojects) {
+//            if(!possibleProject.name.startsWith('grails-test-suite') && !possibleProject.name.contains('grails-test-examples') && possibleProject.name != 'grails-bom') {
+//                def artifactId = mappedArtifactIds[possibleProject.name] ?: possibleProject.name
+//                System.out.println("substitute module(\"${subproject.name in ['grails-async-plugin', 'grails-events-plugin'] ? 'org.grails.plugins' : 'org.grails'}:${artifactId}\") using project(\":${possibleProject.name}\")")
+//            }
+//        }
+        if(!subproject.name.startsWith('grails-test-suite') && !subproject.name.contains('grails-test-examples')) {
+
+            System.out.println(subproject.name)
+        }
+    }
+}
+
 subprojects { subproject ->
 
     version = grailsVersion
 
     ext.isTestSuite = subproject.name.startsWith('grails-test-suite')
-    ext.isExample = subproject.name.contains('grails-test-examples')
     ext.isPlugin = subproject.name in ['grails-async-plugin', 'grails-events-plugin']
     ext.isCiBuild = subproject.hasProperty('isCiBuild') || System.getenv().get('CI') as Boolean
     ext.isAsyncProject = subproject.name.startsWith('grails-async') || subproject.name.startsWith('grails-events')
@@ -184,24 +206,6 @@ subprojects { subproject ->
             'grails-events-plugin'    : 'events',
             'grails-plugin-converters': 'converters'
     ]
-
-    if(isExample) {
-        // Test projects will often include dependencies from grails-core, this file will ensure any dependencies included
-        // will be substituted with projects in this repository instead of pulling upstream
-        configurations.all {
-            resolutionStrategy {
-                dependencySubstitution {
-                    for (def possibleProject  : rootProject.subprojects) {
-                        if(!possibleProject.name.startsWith('grails-test-suite') && !possibleProject.name.contains('grails-test-examples') && possibleProject.name != 'grails-bom') {
-                            def artifactId = mappedArtifactIds[possibleProject.name] ?: possibleProject.name
-                            substitute module("${subproject.name in ['grails-async-plugin', 'grails-events-plugin'] ? 'org.grails.plugins' : 'org.grails'}:${artifactId}") using project(":${possibleProject.name}")
-                        }
-                    }
-                }
-            }
-        }
-        return
-    }
 
     if (isPlugin) {
         group = 'org.grails.plugins'

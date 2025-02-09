@@ -75,6 +75,4 @@ tasks.withType(Jar).configureEach {
     duplicatesStrategy = DuplicatesStrategy.INCLUDE
 }
 
-apply from: rootProject.file('gradle/functional-test-project.gradle')
-
 compileTestGroovy.dependsOn(compileGsonViews)

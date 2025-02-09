@@ -18,7 +18,7 @@ apply plugin: 'java'
 compileJava.options.release = 17
 
 dependencies {
-    implementation platform(project(':grails-bom'))
+    implementation platform("org.grails:grails-bom:${project['grailsVersion']}")
     api 'org.springframework.boot:spring-boot-starter-logging'
     api "org.springframework.boot:spring-boot-starter-actuator"
     api "org.springframework.boot:spring-boot-autoconfigure"
@@ -30,5 +30,3 @@ dependencies {
 
     console "org.grails:grails-console"
 }
-
-apply from: rootProject.file('gradle/functional-test-project.gradle')
