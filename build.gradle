@@ -17,7 +17,6 @@ buildscript {
 apply plugin: 'idea'
 
 ext {
-    isJava8Compatible = org.gradle.api.JavaVersion.current().isJava8Compatible()
     grailsVersion = project.projectVersion
     isCiBuild = System.getenv().get("CI") as Boolean
     isGitHubRepoPublish = System.getenv("GITHUB_PUBLISH") == 'true'
@@ -200,6 +199,7 @@ subprojects { subproject ->
                 }
             }
         }
+
         return
     }
 
