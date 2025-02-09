@@ -18,7 +18,7 @@ apply plugin: 'java'
 compileJava.options.release = 17
 
 dependencies {
-    implementation platform("org.grails:grails-bom:${project['grailsVersion']}")
+    implementation platform(project(':grails-bom'))
 
     implementation "org.springframework.boot:spring-boot-starter-logging"
     implementation "org.springframework.boot:spring-boot-autoconfigure"
@@ -56,3 +56,5 @@ bootRun {
     String springProfilesActive = 'spring.profiles.active'
     systemProperty springProfilesActive, System.getProperty(springProfilesActive)
 }
+
+apply from: rootProject.file('gradle/functional-test-project.gradle')

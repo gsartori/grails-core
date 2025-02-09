@@ -139,7 +139,7 @@ publishing {
 
                 project.parent.subprojects.findResults {
                     if (it.name == 'grails-bom') return null
-                    if (it.name.startsWith('grails-test-suite')) return null
+                    if (it.name.startsWith('grails-test-suite') || it.name.contains('grails-test-examples')) return null
                     [groupId: it.group, artifactId: mappedArtifactIds[it.name] ?: it.name, version: "${it.version}"] +
                         (it.name == 'grails-dependencies'? [type:'pom'] : [])
                 }.each {

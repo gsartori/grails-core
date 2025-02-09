@@ -80,3 +80,4 @@ assets {
     minifyCss = true
 }
 
+apply from: rootProject.file('gradle/functional-test-project.gradle')

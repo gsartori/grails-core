@@ -18,7 +18,7 @@ version "0.1-SNAPSHOT"
 group "org.grails.plugins"
 
 dependencies {
-    implementation platform("org.grails:grails-bom:${project['grailsVersion']}")
+    implementation platform(project(':grails-bom'))
 
     api 'org.springframework.boot:spring-boot-starter-logging'
     api "org.springframework.boot:spring-boot-starter-actuator"
@@ -34,3 +34,5 @@ dependencies {
 
     console "org.grails:grails-console"
 }
+
+apply from: rootProject.file('gradle/functional-test-project.gradle')
