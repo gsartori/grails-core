@@ -79,10 +79,10 @@ jobs:
         env:
           DEVELOCITY_BUILD_CACHE_NODE_USER: ${{ secrets.GRADLE_ENTERPRISE_BUILD_CACHE_NODE_USER }}
           DEVELOCITY_BUILD_CACHE_NODE_KEY: ${{ secrets.GRADLE_ENTERPRISE_BUILD_CACHE_NODE_KEY }}
-        run: ./gradlew build
+        run: ./gradlew build -PonlyFunctionalTests
   publish:
     if: github.event_name == 'push' && needs.skip_check.outputs.found_skip_publish != 'true'
-    needs: build
+    needs: [build, functional]
     permissions:
       contents: read # limit to read access
     runs-on: ubuntu-latest

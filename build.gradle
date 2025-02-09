@@ -430,6 +430,12 @@ subprojects { subproject ->
     ]
 
     tasks.withType(Test).configureEach {
+        onlyIf {
+            if(project.hasProperty('onlyFunctionalTests')) {
+                return false
+            }
+            true
+        }
         useJUnitPlatform()
         jvmArgs += java17moduleReflectionCompatibilityArguments
     }

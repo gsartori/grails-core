@@ -1,7 +1,15 @@
 # Functional tests for Grails Core
 
-A Suite of functional tests for Grails.  By default, tests in this directory will not run from the root if doing a complete grails build locally. 
+A Suite of functional tests for Grails.  
 
-They will run if the gradle command is executed under the `grails-test-examples` directory or if the `onlyFunctionalTests` gradle property is set like so:
+The following properties exist to not run or only run tests in these directories: 
+- `onlyFunctionalTests` - Only run tests in this directory
+- `skipFunctionalTests` - Skip tests in this directory
+
+For example, at the root directory to only run the functional tests:
 
     ./gradlew -PonlyFunctionalTests build
+
+Or to skip the functional tests:
+
+    ./gradlew -PskipFunctionalTests build
