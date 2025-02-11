@@ -17,7 +17,6 @@ buildscript {
 apply plugin: 'idea'
 
 ext {
-    isJava8Compatible = org.gradle.api.JavaVersion.current().isJava8Compatible()
     grailsVersion = project.projectVersion
     isCiBuild = System.getenv().get("CI") as Boolean
     isGitHubRepoPublish = System.getenv("GITHUB_PUBLISH") == 'true'
@@ -185,12 +184,6 @@ subprojects { subproject ->
             'grails-plugin-converters': 'converters'
     ]
 
-    if (isPlugin) {
-        group = 'org.grails.plugins'
-    } else {
-        group = 'org.grails'
-    }
-
     if(isExample) {
         // Test projects will often include dependencies from grails-core, this file will ensure any dependencies included
         // will be substituted with projects in this repository instead of pulling upstream
@@ -206,6 +199,14 @@ subprojects { subproject ->
                 }
             }
         }
+
+        return
+    }
+
+    if (isPlugin) {
+        group = 'org.grails.plugins'
+    } else {
+        group = 'org.grails'
     }
 
     ext.pomInfo = {
@@ -258,7 +259,7 @@ subprojects { subproject ->
         apply plugin: 'project-report'
     }
 
-    if (!isTestSuite && !isExample) {
+    if (!isTestSuite) {
 
         apply plugin: 'maven-publish'
         apply plugin: 'signing'
@@ -346,7 +347,7 @@ subprojects { subproject ->
         }
     }
 
-    if (subproject.name in ['grails-dependencies', 'grails-bom'] || isExample) return
+    if (subproject.name in ['grails-dependencies', 'grails-bom']) return
 
     dependencies {
         implementation platform(project(':grails-bom'))
@@ -429,6 +430,12 @@ subprojects { subproject ->
     ]
 
     tasks.withType(Test).configureEach {
+        onlyIf {
+            if(project.hasProperty('onlyFunctionalTests')) {
+                return false
+            }
+            true
+        }
         useJUnitPlatform()
         jvmArgs += java17moduleReflectionCompatibilityArguments
     }
