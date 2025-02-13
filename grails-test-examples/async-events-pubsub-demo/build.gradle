@@ -21,6 +21,9 @@ group = 'pubsub.demo'
 apply plugin: 'org.grails.grails-web'
 apply plugin: "org.grails.grails-gsp"
 
+apply plugin: 'java'
+compileJava.options.release = 17
+
 dependencies {
     implementation platform(project(':grails-bom'))
 
@@ -58,11 +61,4 @@ bootRun {
     mainClass = 'pubsub.demo.Application'
 }
 
-tasks.withType(Test).configureEach {
-    useJUnitPlatform()
-}
-
-// Don't need groovydoc for example project
-tasks.named('groovydoc') {
-    enabled = false
-}
+apply from: rootProject.file('gradle/functional-test-project.gradle')

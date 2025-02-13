@@ -28,6 +28,7 @@ jobs:
             echo "value=false" >> $GITHUB_OUTPUT
           fi
   build:
+    name: 'Build'
     needs: skip_check
     permissions:
       contents: read  #  to fetch code (actions/checkout)
@@ -54,10 +55,37 @@ jobs:
         env:
           DEVELOCITY_BUILD_CACHE_NODE_USER: ${{ secrets.GRADLE_ENTERPRISE_BUILD_CACHE_NODE_USER }}
           DEVELOCITY_BUILD_CACHE_NODE_KEY: ${{ secrets.GRADLE_ENTERPRISE_BUILD_CACHE_NODE_KEY }}
-        run: ./gradlew build assemble groovydoc --continue
+        run: ./gradlew build assemble groovydoc -PskipFunctionalTests --continue
+  functional:
+    name: "Functional Tests"
+    needs: skip_check
+    permissions:
+      contents: read  #  to fetch code (actions/checkout)
+    strategy:
+      fail-fast: false
+      matrix:
+        java: [ '17', '21', '23' ]
+    runs-on: ubuntu-latest
+    steps:
+      - name: "📥 Checkout repository"
+        uses: actions/checkout@v4
+      - name: "☕️ Setup JDK"
+        uses: actions/setup-java@v4
+        with:
+          distribution: liberica
+          java-version: ${{ matrix.java }}
+      - name: "🐘 Setup Gradle"
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          develocity-access-key: ${{ secrets.GRADLE_ENTERPRISE_ACCESS_KEY }}
+      - name: "🔨 Functional Tests"
+        env:
+          DEVELOCITY_BUILD_CACHE_NODE_USER: ${{ secrets.GRADLE_ENTERPRISE_BUILD_CACHE_NODE_USER }}
+          DEVELOCITY_BUILD_CACHE_NODE_KEY: ${{ secrets.GRADLE_ENTERPRISE_BUILD_CACHE_NODE_KEY }}
+        run: ./gradlew build -PonlyFunctionalTests
   publish:
     if: github.event_name == 'push' && needs.skip_check.outputs.found_skip_publish != 'true'
-    needs: build
+    needs: [build, functional]
     permissions:
       contents: read # limit to read access
     runs-on: ubuntu-latest
@@ -105,28 +133,3 @@ jobs:
           repo: grails/grails-doc
           ref: ${{ steps.extract_branch.outputs.value }}
           token: ${{ secrets.GH_TOKEN }}
-  invoke-third-party-workflows:
-    if: github.event_name == 'push'
-    needs: [build, publish]
-    permissions:
-      contents: read # limit to read access
-    runs-on: ubuntu-latest
-    steps:
-      - name: "📝 Store the target branch"
-        id: extract_branch
-        run: |
-          echo "Determining Target Branch"
-          TARGET_BRANCH=${GITHUB_REF#refs/heads/}
-          echo $TARGET_BRANCH
-          echo "value=${TARGET_BRANCH}" >> $GITHUB_OUTPUT
-      - name: "📝 Create Snapshot Message for the Workflow Dispatch"
-        id: dispatch_message
-        run: echo "value={\"message\":\"New Core Snapshot $(date) - $GITHUB_SHA\"}" >> $GITHUB_OUTPUT
-      - name: "📡 Invoke the Java CI workflow in Grails Functional Tests"
-        uses: benc-uk/workflow-dispatch@e2e5e9a103e331dad343f381a29e654aea3cf8fc # v1.2.4 (Use commit sha as this is a 3rd party action)
-        with:
-          workflow: Java CI
-          repo: grails/grails-functional-tests
-          ref: ${{ steps.extract_branch.outputs.value }}
-          token: ${{ secrets.GH_TOKEN }}
-          inputs: ${{ steps.dispatch_message.outputs.value }}
